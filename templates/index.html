@@ -1,0 +1,45 @@
+<html>
+<head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+<form v-on:submit.prevent="submit">
+<textarea v-model="formData.text"></textarea>
+<input type="submit" value="submit">
+</form>
+<div v-if="seen">
+<h2>Results</h2>
+<ul>
+<li v-for="result in results"> [[ result ]] </li>
+</ul>
+</div>
+</div>
+</body>
+<script>
+const vm = new Vue({
+  el: '#app',
+  delimiters: ['[[', ']]'], // Flaskのdelimiterとの重複を回避
+  data: {
+    seen: false,
+    results: [],
+    formData: {
+      text: ''
+    }
+  },
+  methods: {
+    submit: function() {
+      axios.post('/api', this.formData)
+        .then(response => {
+          this.results = response.data.results;
+          this.seen = true;
+        })
+      .catch(error => {
+        console.log(error);
+      })
+    }
+  }
+});
+</script>
+</html>
