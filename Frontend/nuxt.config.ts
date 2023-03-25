@@ -1,7 +1,15 @@
+import svgLoader from 'vite-svg-loader';
 export default defineNuxtConfig({
   postcss: {
     plugins: { tailwindcss: {} },
   },
-  css: ['~/assets/css/tailwind.css'],
+  css: ['~/css/tailwind.css'],
   modules: ['@nuxtjs/tailwindcss'],
+  vite: {
+    plugins: [
+      svgLoader({
+        svgo: false,
+      }),
+    ],
+  },
 });
