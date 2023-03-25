@@ -11,6 +11,7 @@
       <form action="#">
         <div class="mb-4 text-lg">
           <input
+            v-model="user.userId"
             class="rounded-4xl border-none bg-white-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
             type="text"
             name="name"
@@ -19,6 +20,7 @@
         </div>
         <div class="mb-4 text-lg">
           <input
+            v-model="user.password"
             class="rounded-4xl border-none bg-white-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
             type="Password"
             name="name"
@@ -47,3 +49,22 @@
     </div>
   </div>
 </template>
+
+<script>
+  export default {
+    data() {
+      return {
+        user: {},
+      };
+    },
+    methods: {
+      doLogin() {
+        this.$store.dispatch('auth', {
+          userId: this.user.userId,
+          userToken: 'dummy token',
+        });
+        this.$router.push(this.$route.query.redirect);
+      },
+    },
+  };
+</script>
